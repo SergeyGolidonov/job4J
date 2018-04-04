@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 public class CalculatorTest {
 
     @Test
-    public void testAdd() {
+    public void whenAddOnePlusOneThenTwo() {
         Calculator calc = new Calculator();
         calc.add(1D, 1D);
         double result = calc.getResult();
