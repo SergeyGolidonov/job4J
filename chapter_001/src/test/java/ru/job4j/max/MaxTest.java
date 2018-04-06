@@ -14,6 +14,13 @@ public class MaxTest {
     public void testMax() {
         Max maxim = new Max();
         int result = maxim.max(1, 2);
+        assertThat(result, is(2));
+    }
+
+    @Test
+    public void testThreeMax() {
+        Max max = new Max();
+        int result = max.max(1, 2, 3);
         assertThat(result, is(3));
     }
 }
