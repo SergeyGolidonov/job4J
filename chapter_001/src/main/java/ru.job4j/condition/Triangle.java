@@ -57,7 +57,15 @@ public class Triangle {
      * @return
      */
     private boolean exist(double ab, double ac, double bc) {
-        return false;
+        if (ab > 0) {
+            return true;
+        } else if (ac > 0) {
+            return true;
+        } else if (bc > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
