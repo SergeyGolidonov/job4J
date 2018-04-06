@@ -30,4 +30,8 @@ public class Point {
         double result = a.distanseTo(b);
         System.out.println("Расстояние между точками А и В: " + result);
     }
+
+    public double distanceTo(Point b) {
+        return 0;
+    }
 }
