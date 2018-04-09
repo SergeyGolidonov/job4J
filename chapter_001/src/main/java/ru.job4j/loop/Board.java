@@ -8,7 +8,7 @@ public class Board {
             for (width = 0; width < 3; width++) {
                 // условие проверки, что писать пробел или X
                 // Выше в задании мы определили закономерность, когда нужно проставлять X
-                if (height == width) {
+                if ((height + width) % 2 == 0) {
                     screen.append("X");
                 } else {
                     screen.append(" ");
