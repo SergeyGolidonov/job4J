@@ -5,9 +5,8 @@ public class Counter {
 
         int add = 0;
         for (int i = start; i <= finish; i++) {
-            if (i%2 == 0) {
+            if (i % 2 == 0) {
                 add += i;
-                System.out.println(add);
             }
         }
         return add;
