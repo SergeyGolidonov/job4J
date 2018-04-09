@@ -5,6 +5,6 @@ public class Max {
         return first > second ? first : second;
     }
     public int maximum(int first, int second, int third) {
-        return (maximum(first, maximum(second, third)));
+        return (max(first, max(second, third)));
     }
 }
