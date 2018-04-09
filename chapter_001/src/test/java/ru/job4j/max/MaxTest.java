@@ -18,9 +18,9 @@ public class MaxTest {
     }
 
     @Test
-    public void testThreeMax() {
-        Max max = new Max();
-        int result = max.max(1, 2, 3);
+    public void testThreeMaxi() {
+        Max maxi = new Max();
+        int result = maxi.maximum(1, 2, 3);
         assertThat(result, is(3));
     }
 }

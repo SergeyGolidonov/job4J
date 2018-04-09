@@ -4,7 +4,7 @@ public class Max {
     public int max(int first, int second) {
         return first > second ? first : second;
     }
-    public int max(int first, int second, int third) {
-        return (Math.max(first, Math.max(second, third)));
+    public int maximum(int first, int second, int third) {
+        return (maximum(first, maximum(second, third)));
     }
 }
