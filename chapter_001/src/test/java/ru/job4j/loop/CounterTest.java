@@ -14,6 +14,6 @@ public class CounterTest {
     public void testAdd() {
         Counter counter = new Counter();
         int finish = counter.add(0, 10);
-        assertThat(finish, is(6));
+        assertThat(finish, is(30));
     }
 }
