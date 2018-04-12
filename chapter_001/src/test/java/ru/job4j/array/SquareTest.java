@@ -20,4 +20,13 @@ public class SquareTest {
         int[] expect = new int[] {1, 4, 9};
         assertThat(rst, is(expect));
     }
+
+    @Test
+    public void whenBound5() {
+        int bound = 5;
+        Square square1 = new Square();
+        int[] rst = square1.calculate(bound);
+        int[] expect = new int[] {1, 4, 9, 16, 25};
+        assertThat(rst, is(expect));
+    }
 }
