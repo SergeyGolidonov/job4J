@@ -9,14 +9,6 @@ import java.util.Arrays;
  */
 
 public class ArrayDuplicate {
-    public String[] remove(String[] array) {
-        String[] arr = new String[] {"Привет", "Мир", "Привет", "Супер", "Мир"};
-
-        ArrayDuplicate arrayDuplicate = new ArrayDuplicate();
-        arrayDuplicate.removeDuplicates(arr);
-
-        return arr;
-    }
 
     /**
      * Drop duplicates;
