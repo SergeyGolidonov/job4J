@@ -8,8 +8,6 @@ package ru.job4j.array;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 

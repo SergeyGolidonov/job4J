@@ -9,20 +9,24 @@ package ru.job4j.array;
 public class ArrayString {
 
     boolean contains(String origin, String sub) {
-        char[] or = origin.toCharArray();
-        char[] su = sub.toCharArray();
+        char[] originChar = origin.toCharArray();
+        char[] subChar = sub.toCharArray();
 
-        for(int i = 0; i < or.length; i++) {
-            if(or[i] == su[i]) {
-                i++;
-            }else{
-                i = 0;
-            }
-            if(i == sub.length()) {
-                boolean result = true;
-                break;
+        boolean result = false;
+
+        for(int i = 0; i < originChar.length; i++) {
+            for(int j = 0; j <subChar.length; j++) {
+                if(originChar[i] == subChar[j]) {
+                    j++;
+                }else{
+                    j = 0;
+                }
+                if(j == subChar.length) {
+                    result = true;
+                    break;
+                }
             }
         }
-        return false;
+        return result;
     }
 }
