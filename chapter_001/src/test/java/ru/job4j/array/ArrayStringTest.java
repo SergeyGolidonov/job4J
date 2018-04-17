@@ -1,5 +1,11 @@
 package ru.job4j.array;
 
+/**
+ * @author Sergey Golidonov (3apa3a86@inbox.ru)
+ * @version $Id$
+ * @since 0.1
+ */
+
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -11,8 +17,8 @@ public class ArrayStringTest {
 
     @Test
     public void testContains() {
-        ArrayString contains = new ArrayString();
-        boolean result = contains.contains("Привет", "иве");
+        ArrayString arrayString = new ArrayString();
+        boolean result = arrayString.contains("Привет", "иве");
         assertThat(result, is(true));
     }
 }
