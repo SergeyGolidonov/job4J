@@ -9,22 +9,19 @@ package ru.job4j.array;
 public class ArrayString {
 
     boolean contains(String origin, String sub) {
-        char[] originChar = origin.toCharArray();
-        char[] subChar = sub.toCharArray();
-
+        char[] originChar = origin.toCharArray(); // Преобразовали строку в массив
+        char[] subChar = sub.toCharArray(); // Преобразовали строку в массив
         boolean result = false;
-
-        for(int i = 0; i < originChar.length; i++) {
-            for(int j = 0; j <subChar.length; j++) {
-                if(originChar[i] == subChar[j]) {
-                    j++;
-                }else{
-                    j = 0;
-                }
-                if(j == subChar.length) {
-                    result = true;
-                    break;
-                }
+        int in = 0; // Счетчик начинается с 0
+        for(int i = 0; i < originChar.length; i++) { // Проходим по длинне массива
+            if (originChar[in] == subChar[in]) { // Сравниваем значения в массивах
+                in++; // Если услови верно, проходим по массиву дальше
+            } else { //
+                in = 0; // Если услови не верно, заканчиваем итерацию
+            }
+            if (in == subChar.length) { // сравниваем результат счетчика с массивом
+                result = true; // Если результат счетика совпал с массивом - условие верно
+                break; // Выходим из цикла
             }
         }
         return result;

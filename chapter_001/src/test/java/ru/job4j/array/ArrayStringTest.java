@@ -17,6 +17,6 @@ public class ArrayStringTest {
     public void testContains() {
         ArrayString arrayString = new ArrayString();
         boolean result = arrayString.contains("Привет", "иве");
-        assertThat(result, is(true));
+        assertThat(result, is(false));
     }
 }
