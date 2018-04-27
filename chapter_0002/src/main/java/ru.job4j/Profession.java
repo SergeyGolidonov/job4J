@@ -8,19 +8,19 @@ package ru.job4j;
 
 
 public class Profession {
-    String name;
-    int age;
-    String profession;
+    private String name;
+    private int age;
+    private String profession;
 
-    public String getName() {
-        return name;
+    private String getName() {
+        return this.name;
     }
 
-    public int getAge() {
-        return age;
+    private int getAge() {
+        return this.age;
     }
 
-    public String getProfession() {
-        return profession;
+    private String getProfession() {
+        return this.profession;
     }
 }
