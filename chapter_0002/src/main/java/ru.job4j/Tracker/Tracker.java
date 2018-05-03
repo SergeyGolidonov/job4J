@@ -21,6 +21,36 @@ public class Tracker {
      * Метод реализаущий добавление заявки в хранилище
      * @param item новая заявка
      */
+
+    public class Item {
+        /**
+         * Поля состояния объектов Item
+         */
+        private String id;
+        private String name;
+        private Srting description;
+
+        public Item (String name, String description) {
+            this.name = name;
+            this.description = description;
+        }
+
+        private String getName() {
+            return this.name;
+        }
+
+        private String getId() {
+            return this.id;
+        }
+
+        private String getDescription() {
+            return this.description;
+        }
+
+        private Srting setId() {
+            return this.id;
+        }
+    }
     public Item add(Item item) {
         item.setId(this.generateId());
         this.items[this.position++] = item;
