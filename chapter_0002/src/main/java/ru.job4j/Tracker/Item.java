@@ -15,6 +15,10 @@ public class Item {
     private String description;
     private long create;
 
+    public Item(String name, String description) {
+        this(name, description, System.currentTimeMillis());
+        }
+
     public Item (String name, String description, long create) {
         this.name = name;
         this.description = description;
@@ -33,9 +37,17 @@ public class Item {
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return this.description;
     }
+
+    public void setDescription(String desc) {
+        this.description = desc;
+        }
 
     public long getCreate() {
         return create;

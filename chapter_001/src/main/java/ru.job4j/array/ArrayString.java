@@ -13,7 +13,7 @@ public class ArrayString {
         char[] subChar = sub.toCharArray(); // Преобразовали строку в массив
         boolean result = false;
         int in = 0; // Счетчик начинается с 0
-        for(int i = 0; i < originChar.length; i++) { // Проходим по длинне массива
+        for (int i = 0; i < originChar.length; i++) { // Проходим по длинне массива
             if (originChar[in] == subChar[in]) { // Сравниваем значения в массивах
                 in++; // Если услови верно, проходим по массиву дальше
             } else { //

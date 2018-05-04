@@ -12,8 +12,9 @@ public class ArraysPlus {
         int[] answer = new int[arrayA.length + arrayB.length];
         int i = arrayA.length - 1, j = arrayB.length - 1, k = answer.length;
 
-        while (k > 0)
+        while (k > 0) {
             answer[--k] = (j < 0 || (i >= 0 && arrayA[i] >= arrayB[j])) ? arrayA[i--] : arrayB[j--];
+        }
         return answer;
     }
 }
