@@ -22,6 +22,7 @@ public class Tracker {
 
     /**
      * Метод реализаущий добавление заявки в хранилище
+     *
      * @param item новая заявка
      */
 
@@ -42,16 +43,15 @@ public class Tracker {
     }
 
     public void replace(String id, Item item) { // Метод редактирования заявок
-        for (int i = 0; i < this.position; i++) {
-            if (items[index].getId().equals(id)) {
-                item.setId(items[index].getId());
-                items[index] = item;
+        for (int index = 0; index != position; index++) {
+            if (item.getId().equals(id)) {
+                this.items[index] = item;
                 break;
             }
         }
     }
 
-    public void delete (String id) { // Метод удаления заявок
+    public void delete(String id) { // Метод удаления заявок
         for (int i = 0; i < this.position; i++) {
             if (items[i].getId().equals(id)) {
                 System.arraycopy(this.items, i + 1, this.items, i, this.items.length - i - 1);
@@ -70,12 +70,13 @@ public class Tracker {
 
     public Item[] findByName(String key) { // Метод получения списка по имени
         Item[] result = new Item[this.position];
-        for (int i = 0; i != this.position; i++) {
-            if (this.items[i].equals(key)) {
-                list.add(this.items[i]);
-                }
+        int barrer = 0;
+        for (int index = 0; index != position; index++) {
+            if (this.items[index].getName().equals(key)) {
+                result[barrer++] = this.items[index];
+                break;
             }
-        result = list.size() == 0 ? null : (Item[]) list.toArray();
+        }
         return result;
     }
 
@@ -85,8 +86,8 @@ public class Tracker {
             if (item != null && item.getId().equals(id)) {
                 result = item;
                 break;
-                }
             }
+        }
         return result;
     }
 }
