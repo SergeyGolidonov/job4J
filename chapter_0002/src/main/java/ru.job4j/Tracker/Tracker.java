@@ -42,9 +42,12 @@ public class Tracker {
     }
 
     public void replace(String id, Item item) { // Метод редактирования заявок
-        Item olditem = findById(id);
-        if (olditem != null) {
-            olditem = item;
+        for (int i = 0; i < this.position; i++) {
+            if (items[index].getId().equals(id)) {
+                item.setId(items[index].getId());
+                items[index] = item;
+                break;
+            }
         }
     }
 
@@ -66,8 +69,7 @@ public class Tracker {
     }
 
     public Item[] findByName(String key) { // Метод получения списка по имени
-        Item[] result = null;
-        ArrayList list = new ArrayList();
+        Item[] result = new Item[this.position];
         for (int i = 0; i != this.position; i++) {
             if (this.items[i].equals(key)) {
                 list.add(this.items[i]);
