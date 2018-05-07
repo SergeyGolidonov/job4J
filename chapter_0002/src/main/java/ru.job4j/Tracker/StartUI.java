@@ -26,12 +26,12 @@ public class StartUI {
     private static final String EXIT = "6";
     private Tracker tracker;
 
-    private StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
 
-    private void init() {
+    public void init() {
         ConsoleInput input = new ConsoleInput();
 
         Boolean exit = false;
