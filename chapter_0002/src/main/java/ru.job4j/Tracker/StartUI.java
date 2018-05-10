@@ -32,7 +32,6 @@ public class StartUI {
     }
 
     public void init() {
-        ConsoleInput input = new ConsoleInput();
 
         Boolean exit = false;
         while (!exit) {
