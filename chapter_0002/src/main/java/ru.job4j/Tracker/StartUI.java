@@ -6,6 +6,7 @@ package ru.job4j.Tracker;
  * @since 0.1
  */
 
+import javax.sound.midi.Track;
 
 public class StartUI {
     private Input input;
@@ -33,25 +34,35 @@ public class StartUI {
 
     public void init() {
 
-        Boolean exit = false;
+        Tracker tracker = new Tracker();
+        MenuTracker menu = new MenuTracker(this.input, this.tracker);
+        menu.fillActions();
+        boolean exit = false;
         while (!exit) {
-            String answer = input.ask(menu);
-            if (ADD.equals(answer)) {
-                addNewItem();
-            } else if (SHOW_ALL.equals(answer)) {
-                showAllItems();
-            } else if (EDIT.equals(answer)) {
-                editItem();
-            } else if (DELETE.equals(answer)) {
-                deleteItem();
-            } else if (FIND_BY_ID.equals(answer)) {
-                findItembyId();
-            } else if (FIND_BY_NAME.equals(answer)) {
-                findItemsByName();
-            } else if (EXIT.equals(answer)) {
-                exit = true;
-            }
+            //menu.show();
+            int key = Integer.valueOf(input.ask(menu.get()));
+            exit = menu.select(key);
         }
+
+        //Boolean exit = false;
+        //while (!exit) {
+        //    String answer = input.ask(menu);
+        //    if (ADD.equals(answer)) {
+        //        addNewItem();
+        //    } else if (SHOW_ALL.equals(answer)) {
+        //        showAllItems();
+        //    } else if (EDIT.equals(answer)) {
+        //        editItem();
+        //    } else if (DELETE.equals(answer)) {
+        //        deleteItem();
+        //    } else if (FIND_BY_ID.equals(answer)) {
+        //        findItembyId();
+        //    } else if (FIND_BY_NAME.equals(answer)) {
+        //        findItemsByName();
+        //    } else if (EXIT.equals(answer)) {
+        //        exit = true;
+        //    }
+        //}
     }
 
     private void addNewItem() {
