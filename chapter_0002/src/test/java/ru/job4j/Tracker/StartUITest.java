@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 public class StartUITest {
-
     // поле содержит дефолтный вывод в консоль.
     private final PrintStream stdout = System.out;
     // буфер для результата.
