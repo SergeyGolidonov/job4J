@@ -1,11 +1,9 @@
 package ru.job4j.Tracker;
-
 /**
- * @author Sergey Golidonov (3apa3a86@inbox.ru)
- * @version $Id$
- * @since 0.1
- */
-
+* @author Sergey Golidonov (3apa3a86@inbox.ru)
+* @version $Id$
+* @since 0.1
+*/
 public class MenuTracker {
 
     private Input input;
@@ -41,14 +39,6 @@ public boolean select(int key) {
             result = true;
         }
         return result;
-    }
-
-    public void show() {
-        for (UserAction action : this.actions) {
-            if (action != null) {
-                System.out.println(action.info());
-            }
-        }
     }
 
     public String get() {
@@ -114,11 +104,6 @@ private static class ShowItems implements UserAction {
             System.out.println("Item #" + i++);
             if (item != null) {
                 showItem(item);
-                //System.out.println(String.format("\tItem name: %s\n"
-                //                + "\tItem description: %s\n"
-                //                + "\tItem ID: %s\n"
-                //                + "\tItem creation time: %s\n",
-                //       item.getName(), item.getDescription(), item.getId(), item.getCreate()));
             }
         }
     }

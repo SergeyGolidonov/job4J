@@ -1,15 +1,13 @@
 package ru.job4j.Tracker;
 
 import org.junit.Test;
-import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
-
 /**
- * @author Sergey Golidonov (3apa3a86@inbox.ru)
- * @version $Id$
- * @since 0.1
- */
+* @author Sergey Golidonov (3apa3a86@inbox.ru)
+* @version $Id$
+* @since 0.1
+*/
 
 public class TrackerTest {
 

@@ -1,11 +1,9 @@
 package ru.job4j.Tracker;
-
 /**
- * @author Sergey Golidonov (3apa3a86@inbox.ru)
- * @version $Id$
- * @since 0.1
- */
-
+* @author Sergey Golidonov (3apa3a86@inbox.ru)
+* @version $Id$
+* @since 0.1
+*/
 public class Item {
     /**
      * Поля состояния объектов Item
@@ -17,9 +15,9 @@ public class Item {
 
     public Item(String name, String description) {
         this(name, description, System.currentTimeMillis());
-        }
+    }
 
-    public Item (String name, String description, long create) {
+    public Item(String name, String description, long create) {
         this.name = name;
         this.description = description;
         this.create = create;
