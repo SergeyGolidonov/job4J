@@ -1,4 +1,4 @@
-package ru.job4j.Tracker;
+package ru.job4j.tracker;
 /**
 * @author Sergey Golidonov (3apa3a86@inbox.ru)
 * @version $Id$
