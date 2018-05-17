@@ -1,4 +1,4 @@
-package ru.job4j.Tracker;
+package ru.job4j.tracker;
 /**
 * @author Sergey Golidonov (3apa3a86@inbox.ru)
 * @version $Id$
@@ -14,5 +14,22 @@ public class ConsoleInput implements Input {
     public String ask(String question) {
         System.out.print(question);
         return scanner.nextLine();
+    }
+
+    @Override
+    public int ask(String question, int[] range) {
+        int key = Integer.valueOf(this.ask(question));
+        boolean exist = false;
+        for (int value : range) {
+            if (value == key) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            return key;
+        } else {
+            throw new MenuOutException("Out of menu range.");
+        }
     }
 }

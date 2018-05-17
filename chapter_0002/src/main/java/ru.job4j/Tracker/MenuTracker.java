@@ -1,4 +1,4 @@
-package ru.job4j.Tracker;
+package ru.job4j.tracker;
 /**
 * @author Sergey Golidonov (3apa3a86@inbox.ru)
 * @version $Id$
@@ -9,6 +9,7 @@ public class MenuTracker {
     private Input input;
     private Tracker tracker;
     private UserAction[] actions = new UserAction[7];
+    private int[] availableActions;
 
     MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -23,6 +24,15 @@ public class MenuTracker {
         this.actions[4] = new FindItemById();
         this.actions[5] = new FindItemByName();
         this.actions[6] = new Exit();
+
+        this.availableActions = new int[this.actions.length];
+        for (int i = 0; i < this.actions.length; i++) {
+            this.availableActions[i] = i;
+        }
+    }
+
+    int[] getAvailableActions() {
+        return this.availableActions;
     }
 
 /**
