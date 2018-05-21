@@ -24,8 +24,6 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        Input input = new ValidateInput();
-        Tracker tracker = new Tracker();
-        new StartUI(input, tracker).init();
+        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
     }
 }
