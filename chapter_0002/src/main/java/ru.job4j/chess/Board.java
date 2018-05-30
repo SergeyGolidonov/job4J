@@ -7,51 +7,43 @@ package ru.job4j.chess;
  */
 
 public class Board {
-   private Figure[] figures = new Figure[32];
-    private int numberOfFigures = 0;
 
-   public Board() {
+    private static final int FINIFH = 32;
 
-   }
+    Figure[] figures = new Figure[FINIFH];
 
-    public void addFigure(Figure figure) {
-        this.figures[numberOfFigures++] = figure;
+    private int pos = 0;
+
+    public void add(Figure figure) {
+        this.figures[pos++] = figure;
     }
 
-   public Figure getFigure(Cell position) {
-       Figure result = null;
-       int k = 0;
-       while (k < this.numberOfFigures) {
-           if (figures[k].getPosition().equals(position)) {
-               result = figures[k];
-               break;
-           }
-           k++;
-       }
-       return result;
-   }
+    boolean move(Cell source, Cell dest) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
+        int index = this.getIndexOfFigureFromCell(source);
+        if (index < 0) {
+            throw new FigureNotFoundException("Фигуры нет на месте");
+        }
+        Cell[] cells = this.figures[index].way(source, dest);
+        for (Cell cell : cells) {
+            int obstacle = this.getIndexOfFigureFromCell(cell);
+            if (obstacle >= 0) {
+                throw new OccupiedWayException("Фигура не может пройти");
+            }
+        }
 
-   public boolean move(Cell source, Cell dest)
-           throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
-       Figure figure = getFigure(source);
-       if (figure == null) {
-           throw new FigureNotFoundException();
-       }
-       int figNumber = 0;
-       for(int i = 0; i < this.numberOfFigures; i++) {
-           if (this.figures[i] == figure) {
-               figNumber = i;
-               break;
-           }
-       }
-       Cell[] way = figure.way(dest);
-       for (int i = 1; i < way.length; i++) {
-           Cell cell = way[i];
-           if (getFigure(cell) != null) {
-               throw new OccupiedWayException();
-           }
-       }
-       this.figures[figNumber] = figure.copy(dest);
-       return true;
-   }
+        figures[index].copy(dest);
+        return true;
+    }
+
+    private int getIndexOfFigureFromCell(Cell cell) {
+        int index = -1;
+        for (int i = 0; i < this.pos; i++) {
+            if (figures[i] != null && figures[i].position.getX() == cell.getX()
+                    && figures[i].position.getY() == cell.getY()) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
 }

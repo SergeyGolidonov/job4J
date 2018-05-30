@@ -6,53 +6,84 @@ package ru.job4j.chess;
  * @since 0.1
  */
 
-import org.hamcrest.collection.IsArrayContainingInAnyOrder;
+import org.junit.Rule;
 import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import org.junit.rules.ExpectedException;
 
 public class BoardTest {
 
     @Test
-    public void whenAddBishopToBoardThenItIsThere() {
+    public void whenBishopRightMoveWithoutFigures() {
+        Cell source = new Cell(8, 1);
+        Cell dest = new Cell(3, 6);
+        Bishop bishop = new Bishop(source);
         Board board = new Board();
-        Cell position = new Cell(1,1);
-        Figure bishop = new Bishop(position);
-        board.addFigure(bishop);
-        Figure result = board.getFigure(position);
-        assertThat(result, is(bishop));
+        board.add(bishop);
+        boolean result = board.move(source, dest);
+        assertThat(true, is(result));
     }
+
+    @Rule
+    public ExpectedException impossibl = ExpectedException.none();
 
     @Test
-    public void whenBishopMovesFrom1x1to4x4ThenItIsThere() {
+    public void whenBishopWrongMoveWithoutFigures() throws ImpossibleMoveException {
+        impossibl.expect(ImpossibleMoveException.class);
+        impossibl.expectMessage("Слон не может так ходить.");
+
+        Cell source = new Cell(8, 1);
+        Cell dest = new Cell(8, 8);
+        Bishop bishop = new Bishop(source);
         Board board = new Board();
-        Cell start = new Cell(1, 1);
-        Cell finish = new Cell(4, 4);
-        Figure bishop = new Bishop(start);
-        board.addFigure(bishop);
-        try {
-            board.move(start, finish);
-        } catch (ImpossibleMoveException e) {
-            e.printStackTrace();
-        } catch (OccupiedWayException e) {
-            e.printStackTrace();
-        } catch (FigureNotFoundException e) {
-            e.printStackTrace();
-        }
-        assertThat(board.getFigure(finish), notNullValue());
-        assertThat(board.getFigure(start), nullValue());
+        board.add(bishop);
+        boolean result = board.move(source, dest);
     }
 
-    @Test(expected = OccupiedWayException.class)
-    public void whenBishopMovesThroughOccupiedCellThenOccupiedWayExceptionOccured()
-            throws OccupiedWayException, ImpossibleMoveException, FigureNotFoundException {
+    @Rule
+    public ExpectedException empty = ExpectedException.none();
+
+    @Test
+    public void whenBishopWrongMoveFigureNotFoundException1() throws FigureNotFoundException {
+        empty.expect(FigureNotFoundException.class);
+        empty.expectMessage("Фигуры нет на месте");
+        Cell sourse = new Cell(8, 8);
         Board board = new Board();
-        Cell start = new Cell(1,1);
-        Figure bishop1 = new Bishop(start);
-        Figure bishop2 = new Bishop(new Cell(2, 2));
-        board.addFigure(bishop1);
-        board.addFigure(bishop2);
-        board.move(start, new Cell(4,4));
+        boolean result = board.move(sourse, sourse);
+    }
+
+    @Rule
+    public ExpectedException emptyfully = ExpectedException.none();
+
+    @Test
+    public void whenBishopWrongMoveFigureNotFoundException2() throws FigureNotFoundException {
+        emptyfully.expect(FigureNotFoundException.class);
+        emptyfully.expectMessage("Фигуры нет на месте");
+        Cell sourse = new Cell(8, 1);
+        Cell dest = new Cell(8, 8);
+        Bishop bishop = new Bishop(sourse);
+        Board board = new Board();
+        board.add(bishop);
+        boolean result = board.move(dest, dest);
+    }
+
+    @Rule
+    public ExpectedException notpass = ExpectedException.none();
+
+    @Test
+    public void whenBishopWrongMoveOccupiedWayException() throws OccupiedWayException {
+        notpass.expect(OccupiedWayException.class);
+        notpass.expectMessage("Фигура не может пройти");
+        Cell sourse = new Cell(8, 1);
+        Cell dest = new Cell(2, 7);
+        Bishop bishop = new Bishop(sourse);
+        Board board = new Board();
+        board.add(bishop);
+        Cell busy = new Cell(3, 6);
+        Bishop bishop1 = new Bishop(busy);
+        board.add(bishop1);
+        boolean result = board.move(sourse, dest);
     }
 }

@@ -6,17 +6,17 @@ package ru.job4j.chess;
  * @since 0.1
  */
 
-abstract class Figure extends Board {
+public abstract class Figure {
+
+    public static final int SIZE = 8;
 
     final Cell position;
 
     public Figure(Cell position) {
         this.position = position;
     }
-    abstract Cell[] way(Cell source, Cell dest)throws ImpossibleMoveException;
-    abstract Figure copy(Cell dest);
 
-    public abstract Cell getPosition();
+    public abstract Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException;
 
-    public abstract Cell[] way(Cell dest);
+    public abstract Figure copy(Cell dest);
 }

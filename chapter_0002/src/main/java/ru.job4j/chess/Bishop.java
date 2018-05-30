@@ -1,6 +1,6 @@
 package ru.job4j.chess;
 
-import javafx.scene.control.Cell;
+import java.util.Arrays;
 
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
@@ -10,34 +10,42 @@ import javafx.scene.control.Cell;
 
 public class Bishop extends Figure {
 
-    Bishop(Cell position) {
+    public Bishop(ru.job4j.chess.Cell position) {
         super(position);
     }
 
     @Override
-    Cell[] way(Cell dest) throws ImpossibleMoveException {
-        if (!Cell.checkCell(dest) || !Cell.checkCell(this.position)) {
-            throw new ImpossibleMoveException();
+    public ru.job4j.chess.Cell[] way(ru.job4j.chess.Cell source, ru.job4j.chess.Cell dest) throws ImpossibleMoveException {
+        ru.job4j.chess.Cell[] tmp = new ru.job4j.chess.Cell[SIZE - 1];
+        int pos = 0;
+        int x = source.getX();
+        int y = source.getY();
+        int testX = 0;
+        int testY = 0;
+        if (source.getY() < dest.getY()) {
+            testY = 1;
+        } else {
+            testY = -1;
         }
-        int srcX = this.getPosition().getX();
-        int srcY = this.getPosition().getY();
-        int destX = dest.getX();
-        int destY = dest.getY();
-        if (Math.abs(destX - srcX) != (Math.abs(destY - srcY))) {
-            throw new ImpossibleMoveException();
+        if (source.getX() < dest.getX()) {
+            testX = 1;
+        } else {
+            testX = -1;
         }
-        int wayLength = Math.abs(srcX - destX);
-        int xstep = (destX - srcX) / wayLength;
-        int ystep = (destY - srcY) / wayLength;
-        Cell[] result = new Cell[wayLength + 1];
-        for (int i = 0; i <= wayLength; i++) {
-            result[i] = new Cell(srcX + i * xstep, srcY + i * ystep);
+        do {
+            x += testX;
+            y += testY;
+            if (x < 1 || x > SIZE || y < 1 || y > SIZE) {
+                throw new ImpossibleMoveException("Слон не может так ходить.");
+            }
+            tmp[pos++] = new ru.job4j.chess.Cell(x, y);
         }
-        return result;
+        while (x != dest.getX() || y != dest.getY());
+        return Arrays.copyOf(tmp, pos);
     }
 
     @Override
-    Figure copy(Cell dest) {
+    public Figure copy(ru.job4j.chess.Cell dest) {
         return new Bishop(dest);
     }
 }
