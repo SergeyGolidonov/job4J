@@ -10,13 +10,13 @@ import java.util.Arrays;
 
 public class Bishop extends Figure {
 
-    public Bishop(ru.job4j.chess.Cell position) {
+    public Bishop(Cell position) {
         super(position);
     }
 
     @Override
-    public ru.job4j.chess.Cell[] way(ru.job4j.chess.Cell source, ru.job4j.chess.Cell dest) throws ImpossibleMoveException {
-        ru.job4j.chess.Cell[] tmp = new ru.job4j.chess.Cell[SIZE - 1];
+    public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
+        Cell[] tmp = new Cell[SIZE - 1];
         int pos = 0;
         int x = source.getX();
         int y = source.getY();
@@ -38,14 +38,14 @@ public class Bishop extends Figure {
             if (x < 1 || x > SIZE || y < 1 || y > SIZE) {
                 throw new ImpossibleMoveException("Слон не может так ходить.");
             }
-            tmp[pos++] = new ru.job4j.chess.Cell(x, y);
+            tmp[pos++] = new Cell(x, y);
         }
         while (x != dest.getX() || y != dest.getY());
         return Arrays.copyOf(tmp, pos);
     }
 
     @Override
-    public Figure copy(ru.job4j.chess.Cell dest) {
+    public Figure copy(Cell dest) {
         return new Bishop(dest);
     }
 }
