@@ -40,6 +40,7 @@ public class BoardTest {
         Board board = new Board();
         board.add(bishop);
         boolean result = board.move(source, dest);
+        assertThat(result, is(true));
     }
 
     @Rule
@@ -52,6 +53,7 @@ public class BoardTest {
         Cell sourse = new Cell(8, 8);
         Board board = new Board();
         boolean result = board.move(sourse, sourse);
+        assertThat(result, is(true));
     }
 
     @Rule
@@ -67,6 +69,7 @@ public class BoardTest {
         Board board = new Board();
         board.add(bishop);
         boolean result = board.move(dest, dest);
+        assertThat(result, is(true));
     }
 
     @Rule
@@ -85,5 +88,6 @@ public class BoardTest {
         Bishop bishop1 = new Bishop(busy);
         board.add(bishop1);
         boolean result = board.move(sourse, dest);
+        assertThat(result, is(true));
     }
 }
