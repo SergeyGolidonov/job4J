@@ -23,7 +23,7 @@ public class BoardTest {
         Board board = new Board();
         board.add(bishop);
         boolean result = board.move(source, dest);
-        assertThat(true, is(result));
+        assertThat(result, is(true));
     }
 
     @Rule
