@@ -6,6 +6,7 @@ package ru.job4j.brackets;
  * @since 0.1
  */
 
+
 import java.util.ArrayList;
 import java.util.Stack;
 
