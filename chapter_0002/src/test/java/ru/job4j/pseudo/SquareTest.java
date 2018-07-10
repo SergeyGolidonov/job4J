@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class SquareTest {
     @Test()
-    public void testForSquere() {
+    public void testForSquare() {
         Square square = new Square(); // Создали объект квадрата для тестирования
         assertThat(square.draw(),
                 is(new StringBuilder()
