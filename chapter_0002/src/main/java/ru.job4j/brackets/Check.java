@@ -21,12 +21,33 @@ public class Check {
     public boolean makeCheck(String s) {
         for (int i = 0; i < lengthInput; i++) {  // начинаем последовательно считывать
             char ch = input.charAt(i);              // считывание символа
-            if (!stack.isEmpty()) {                                 //если стек не пустой
-                char chClosed = (char) stack.deleteElement();             //удалить и проверить
-                if ((ch == '}' && chClosed != '{')
-                        || (ch == ']' && chClosed != '[')
-                        || (ch == ')' && chClosed != '('));
+            switch (ch) {
+                case '{':
+                case '[':
+                case '(':
+                    stack.addElement(ch);
+                    break;
+                case '}':
+                case ']':
+                case ')':
+
+                    if (!stack.isEmpty()) {                                 //если стек не пустой
+                        char chClosed = (char) stack.deleteElement();             //удалить и проверить
+
+                        if ((ch == '}' && chClosed != '{')
+                                || (ch == ']' && chClosed != '[')
+                                || (ch == ')' && chClosed != '('))
+                            System.out.println("Ошибка! Скобка " + ch + " в " + i + " позиции.");
+                    } else                                                  //недостаток элементов в стеке
+                        System.out.println("Ошибка! Скобка " + ch + " в " + i + " позиции.");
+                    break;
+
+                default:    // для других символов действия не выполняются
+                    break;
             }
+        }
+        if (!stack.isEmpty()) {
+            System.out.println("Ошибка! Отсутствует закрывающая скобка");
         }
         return true;
     }

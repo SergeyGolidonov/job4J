@@ -6,7 +6,7 @@ package ru.job4j.brackets;
  * @since 0.1
  */
 
-public class Stack {
+class Stack {
     private int mSize;
     private int[] stackArray;
     private int top;
@@ -17,11 +17,24 @@ public class Stack {
         top = -1;
     }
 
+    public void addElement(int element) {
+        stackArray[++top] = element;
+    }
+
     public int deleteElement() {
         return stackArray[top--];
     }
 
+    public int readTop() {
+        return stackArray[top];
+
+    }
+
     public boolean isEmpty() {
         return (top == -1);
+    }
+
+    public boolean isFull() {
+        return (top == mSize - 1);
     }
 }
