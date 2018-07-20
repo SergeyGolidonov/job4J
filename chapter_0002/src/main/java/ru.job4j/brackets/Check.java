@@ -36,18 +36,13 @@ public class Check {
 
                         if ((ch == '}' && chClosed != '{')
                                 || (ch == ']' && chClosed != '[')
-                                || (ch == ')' && chClosed != '('))
-                            System.out.println("Ошибка! Скобка " + ch + " в " + i + " позиции.");
-                    } else                                                  //недостаток элементов в стеке
-                        System.out.println("Ошибка! Скобка " + ch + " в " + i + " позиции.");
-                    break;
-
-                default:    // для других символов действия не выполняются
+                                || (ch == ')' && chClosed != '('));
+                    } return true;
+                    default:    // для других символов действия не выполняются
                     break;
             }
         }
         if (!stack.isEmpty()) {
-            System.out.println("Ошибка! Отсутствует закрывающая скобка");
         }
         return true;
     }
