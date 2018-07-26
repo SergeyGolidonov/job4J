@@ -20,11 +20,12 @@ public class PriorityOfQueue {
      */
 
     public void put(Task task) {
-        int i = 0;
 
-        while (i < this.tasks.size()) {
-            if (task.getPriority() < this.tasks.get(i).getPriority()) {
-                this.tasks.add(i, task);
+        int size = this.tasks.size();
+
+        for (int index = 0; index != size; index++) {
+            if (task.getPriority() <= tasks.get(index).getPriority()) {
+                tasks.add(index, task);
             }
         }
         this.tasks.add(task);
