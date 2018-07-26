@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class PhoneModelDirectory {
-    private List<Person> persons = new ArrayList<Person>();
+    private List<Person> persons = new ArrayList<>();
 
     public void add(Person person) {
         this.persons.add(person);
