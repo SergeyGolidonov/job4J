@@ -9,6 +9,7 @@
         <module name="chapter_0002" />
         <module name="chapter_001" />
         <module name="chapter_003" />
+        <module name="shildtSelfLearning" />
       </profile>
     </annotationProcessing>
   </component>
