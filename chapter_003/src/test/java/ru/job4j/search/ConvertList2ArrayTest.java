@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class ConvertList2ArrayTest {
     @Test
-    public void when7ElementsThen9() {
+    public void when7ElementsThen9When3Rows() {
         ConvertList2Array list = new ConvertList2Array();
         int[][] result = list.toArray(
                 Arrays.asList(1, 2, 3, 4, 5, 6, 7),3);
@@ -25,7 +25,7 @@ public class ConvertList2ArrayTest {
     }
 
     @Test
-    public void when3ElementsThen9() {
+    public void when3ElementsThen9When3Rows() {
         ConvertList2Array list = new ConvertList2Array();
         int[][] result = list.toArray(
                 Arrays.asList(1, 2, 3),3);
@@ -37,7 +37,7 @@ public class ConvertList2ArrayTest {
     }
 
     @Test
-    public void when3ElementsThen5When4Rows() {
+    public void when5ElementsThen16When4Rows() {
         ConvertList2Array list = new ConvertList2Array();
         int[][] result = list.toArray(
                 Arrays.asList(1, 2, 3, 4, 5),4);
@@ -46,6 +46,17 @@ public class ConvertList2ArrayTest {
                 {5, 0, 0, 0},
                 {0, 0 ,0, 0},
                 {0, 0 ,0, 0}};
+        assertThat(result, is(expect));
+    }
+
+    @Test
+    public void when5ElementsThen8When2Rows() {
+        ConvertList2Array list = new ConvertList2Array();
+        int[][] result = list.toArray(
+                Arrays.asList(1, 2, 3, 4, 5),2);
+        int[][] expect = {
+                {1, 2, 3},
+                {4, 5, 0}};
         assertThat(result, is(expect));
     }
 }
