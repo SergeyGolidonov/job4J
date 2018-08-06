@@ -1,5 +1,7 @@
 package ru.job4j.search.listToMap;
 
+import java.util.Objects;
+
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
  * @version $Id$
@@ -21,11 +23,38 @@ public class User {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCity() {
         return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() &&
+                Objects.equals(getName(), user.getName()) &&
+                Objects.equals(getCity(), user.getCity());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getCity());
     }
 }
