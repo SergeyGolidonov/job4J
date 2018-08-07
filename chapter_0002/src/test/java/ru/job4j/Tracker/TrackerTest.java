@@ -1,6 +1,13 @@
 package ru.job4j.tracker;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.StringJoiner;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 /**
@@ -10,76 +17,71 @@ import static org.junit.Assert.*;
 */
 
 public class TrackerTest {
-
-        @Test
-        public void whenAddNewItemThenTrackerHasSameItem() {
-                Tracker tracker = new Tracker();
-                Item item = new Item("test1", "testDescription", 123L);
-                tracker.add(item);
-                assertThat(tracker.findAll()[0], is(item));
-        }
-/**
- * Тест редактирование заявок.
- */
+        /**
+         * Тест.
+         * Замены ячейки в массиве.
+         */
         @Test
         public void whenReplaceNameThenReturnNewName() {
                 Tracker tracker = new Tracker();
                 Item previous = new Item("test1", "testDescription", 123L);
                 tracker.add(previous);
-                Item next = new Item("test2", "testDescription2", 123L);
+                Item next = new Item("test2", "testDescription2", 1234L);
                 next.setId(previous.getId());
                 tracker.replace(previous.getId(), next);
                 assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
-            }
-/**
- * Тест удаление заявок.
- */
+        }
+
+        /**
+         * Тест.
+         * Поиск всех элементов.
+         */
         @Test
-        public void whenDeleteItemThenTrackerDeleteItem() {
+        public void whenFindAllThenReturnAll() {
                 Tracker tracker = new Tracker();
+                Item item = new Item("test1", "testDescription", 123L);
+                tracker.add(item);
+                assertThat(tracker.findAll().get(0), is(item));
+        }
+
+        /**
+         * Тест.
+         * Поиск по названию.
+         */
+        @Test
+        public void whenFindByNameThenReturnName() {
+                Tracker tracker = new Tracker();
+                Item item = new Item("test1", "testDescription", 123L);
+                tracker.add(item);
+                assertThat(tracker.findByName("test1").get(0), is(item));
+        }
+
+        /**
+         * Тест.
+         * Поиск по id.
+         */
+        @Test
+        public void whenFindByIdThenReturnId() {
+                Tracker tracker = new Tracker();
+                Item item = new Item("test1", "testDescription", 123L);
+                tracker.add(item);
+                assertThat(tracker.findById(item.getId()), is(item));
+        }
+
+        /**
+         * Тест.
+         * Удаление элемента.
+         */
+        @Test
+        public void whenDeleteThenReturnDelete() {
+                Tracker tracker = new Tracker();
+                Item item = new Item("test1", "testDescription", 123L);
                 Item item1 = new Item("test1", "testDescription", 123L);
-                Item item2 = new Item("test2", "testDescription", 123L);
+                Item item2 = new Item("test1", "testDescription", 123L);
+                tracker.add(item);
                 tracker.add(item1);
                 tracker.add(item2);
-                Item[] testArray = new Item[1];
-                testArray[0] = item1;
-                tracker.delete(item2.getId());
-                assertThat(tracker.findAll(), is(testArray));
-        }
-/**
- * Тест получение списка всех заявок.
- */
-        @Test
-        public void whenFindAllItemsThanTrackerFindsAllItems() {
-                Tracker trackers = new Tracker();
-                Item item1 = new Item("test1", "testDescription", 123L);
-                Item item2 = new Item("test2", "testDescription", 123L);
-                trackers.add(item1);
-                trackers.add(item2);
-                Item[] testArray = new Item[2];
-                testArray[0] = item1;
-                testArray[1] = item2;
-                assertThat(trackers.findAll(), is(testArray));
-        }
-/**
- * Тест получение списка по имени.
- */
-        @Test
-        public void whenFindByNameThenTrackerFindsItem() {
-                Tracker tracker = new Tracker();
-                Item item = new Item("test1", "testDescription", 123L);
-                tracker.add(item);
-                Item result = tracker.findByName(item.getName())[0];
-        }
-/**
- * Тест получение заявки по id.
- */
-        @Test
-        public void whenFindByIdThenTrackerFidsItem() {
-                Tracker tracker = new Tracker();
-                Item item = new Item("test1", "testDescription", 123L);
-                tracker.add(item);
-                Item result = tracker.findById(item.getId());
-                assertThat(result, is(item));
+                tracker.delete(item.getId());
+                assertThat(tracker.findAll().get(1), is(item2));
         }
 }

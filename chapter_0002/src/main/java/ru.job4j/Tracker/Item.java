@@ -10,44 +10,45 @@ public class Item {
      */
     private String id;
     private String name;
-    private String description;
-    private long create;
+    private String desc;
+    private long created;
+    private String[] comments;
 
-    public Item(String name, String description) {
-        this(name, description, System.currentTimeMillis());
+    public Item() {
     }
 
-    public Item(String name, String description, long create) {
+    public Item(String name, String desc) {
         this.name = name;
-        this.description = description;
-        this.create = create;
+        this.desc = desc;
+    }
+
+    public Item(String name, String desc, long created) {
+        this.name = name;
+        this.desc = desc;
+        this.created = created;
     }
 
     public String getId() {
         return this.id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDesc() {
+        return this.desc;
     }
 
-    public String getDescription() {
-        return this.description;
+    public long getCreated() {
+        return this.created;
     }
 
-    public void setDescription(String desc) {
-        this.description = desc;
-        }
+    public String[] getComments() {
+        return this.comments;
+    }
 
-    public long getCreate() {
-        return create;
+    public void setId(String id) {
+        this.id = id;
     }
 }

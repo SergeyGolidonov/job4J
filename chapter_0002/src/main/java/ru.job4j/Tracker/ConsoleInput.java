@@ -1,13 +1,15 @@
 package ru.job4j.tracker;
+
+import java.util.Scanner;
+
 /**
 * @author Sergey Golidonov (3apa3a86@inbox.ru)
 * @version $Id$
 * @since 0.1
 */
-import java.util.Scanner;
+
 
 public class ConsoleInput implements Input {
-
     private Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -17,7 +19,7 @@ public class ConsoleInput implements Input {
     }
 
     @Override
-    public int ask(String question, int[] range) {
+    public int ask(String question, int[] range) throws MenuOutException {
         int key = Integer.valueOf(this.ask(question));
         boolean exist = false;
         for (int value : range) {
@@ -26,9 +28,10 @@ public class ConsoleInput implements Input {
                 break;
             }
         }
-        if (!exist) {
+        if (exist) {
+            return key;
+        } else {
             throw new MenuOutException("Out of menu range.");
         }
-        return key;
     }
 }
