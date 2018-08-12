@@ -43,11 +43,12 @@ public class Tracker {
      * @param id id звявки.
      */
     public void delete(String id) {
-        for (Item j : items) {
-            if (j != null && j.getId().equals(id)) {
-                int i = items.indexOf(j);
-                items.remove(i);
-                break;
+        if (id != null) {
+            for (int i = 0; i < items.size(); i++) {
+                if (id.equals(this.items.get(i).getId())) {
+                    this.items.remove(i);
+                    break;
+                }
             }
         }
     }
@@ -99,5 +100,4 @@ public class Tracker {
     private String generateId() {
         return String.valueOf(System.currentTimeMillis() + RND.nextInt(100));
     }
-
 }
