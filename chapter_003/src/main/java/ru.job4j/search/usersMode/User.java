@@ -8,18 +8,18 @@ package ru.job4j.search.usersMode;
 
 public class User implements Comparable<User> {
     private String name;
-    private String age;
+    private int age;
 
-    public User(String name, String age) {
+    public User(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -33,6 +33,6 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User user) {
-        return this.age.compareTo(user.getAge());
+        return this.age - user.getAge();
     }
 }
