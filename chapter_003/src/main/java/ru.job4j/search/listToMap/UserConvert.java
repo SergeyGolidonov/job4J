@@ -1,4 +1,4 @@
-package ru.job4j.search.listToMap;
+package ru.job4j.search.listtomap;
 
 import java.util.HashMap;
 import java.util.List;

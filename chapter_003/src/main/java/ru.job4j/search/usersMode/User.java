@@ -1,4 +1,4 @@
-package ru.job4j.search.usersMode;
+package ru.job4j.search.usersmode;
 
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
@@ -34,5 +34,10 @@ public class User implements Comparable<User> {
     @Override
     public int compareTo(User user) {
         return this.age - user.getAge();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "name='" + name + '\'' + ", age=" + age + '}';
     }
 }

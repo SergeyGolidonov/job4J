@@ -1,8 +1,10 @@
-package ru.job4j.search.usersMode;
+package ru.job4j.search.usersmode;
 
 import com.sun.corba.se.spi.servicecontext.UEInfoServiceContext;
 import org.junit.Before;
 import org.junit.Test;
+import ru.job4j.search.usersmode.SortUser;
+import ru.job4j.search.usersmode.User;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.*;

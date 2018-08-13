@@ -1,4 +1,4 @@
-package ru.job4j.search.listToMap;
+package ru.job4j.search.listtomap;
 
 import org.junit.Test;
 import javax.jws.soap.SOAPBinding;

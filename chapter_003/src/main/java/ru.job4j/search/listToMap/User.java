@@ -1,4 +1,4 @@
-package ru.job4j.search.listToMap;
+package ru.job4j.search.listtomap;
 
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ public class User {
     private String name;
     private String city;
 
-    public User (int id, String name, String city) {
+    public User(int id, String name, String city) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -45,12 +45,15 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
         User user = (User) o;
-        return getId() == user.getId() &&
-                Objects.equals(getName(), user.getName()) &&
-                Objects.equals(getCity(), user.getCity());
+        return getId() == user.getId() && Objects.equals(getName(), user.getName())
+                && Objects.equals(getCity(), user.getCity());
     }
 
     @Override
