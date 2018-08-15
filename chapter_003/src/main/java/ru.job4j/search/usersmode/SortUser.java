@@ -1,7 +1,7 @@
 package ru.job4j.search.usersmode;
 
-import ru.job4j.search.usersmode.User;
 import java.util.*;
+
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
  * @version $Id$

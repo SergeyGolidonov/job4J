@@ -2,6 +2,7 @@ package ru.job4j.search.listtomap;
 
 import java.util.HashMap;
 import java.util.List;
+
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
  * @version $Id$

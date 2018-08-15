@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
  * @version $Id$
  * @since 0.1
  */
+
 public class UserConvertTest {
     @Test
     public void whenListConvertToMap() {

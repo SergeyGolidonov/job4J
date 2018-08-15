@@ -1,6 +1,7 @@
 package ru.job4j.search.listtomap;
 
 import java.util.Objects;
+
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
  * @version $Id$
