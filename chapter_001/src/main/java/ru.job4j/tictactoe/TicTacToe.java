@@ -16,6 +16,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
+/**
+ * @author Sergey Golidonov (3apa3a86@inbox.ru)
+ * @version $Id$
+ * @since 0.1
+ */
+
 public class TicTacToe extends Application {
     private static final String JOB4J = "Крестики-нолики www.job4j.ru";
     private final int size = 3;
@@ -54,17 +60,25 @@ public class TicTacToe extends Application {
     private boolean checkState() {
         boolean gap = this.logic.hasGap();
         if (!gap) {
-            this.showAlert("Все поля запонены! Начните новую Игру!");
+            this.showAlert("Все поля заполнены! Начните новую Игру!");
         }
         return gap;
     }
 
-    private void checkWinner() {
+    /**
+     * Метод проверяет, есть ли победитель.
+     * @return - Истина - есть победитель.
+     */
+    private boolean checkWinner() {
+        boolean result = false;
         if (this.logic.isWinnerX()) {
             this.showAlert("Победили Крестики! Начните новую Игру!");
+            result = true;
         } else if (this.logic.isWinnerO()) {
             this.showAlert("Победили Нолики! Начните новую Игру!");
+            result = true;
         }
+        return result;
     }
 
     private Group buildMarkX(double x, double y, int size) {
@@ -85,7 +99,7 @@ public class TicTacToe extends Application {
     private EventHandler<MouseEvent> buildMouseEvent(Group panel) {
         return event -> {
             Figure3T rect = (Figure3T) event.getTarget();
-            if (this.checkState()) {
+            if (this.checkState() && !this.checkWinner()) {
                 if (event.getButton() == MouseButton.PRIMARY) {
                     rect.take(true);
                     panel.getChildren().add(
@@ -97,7 +111,9 @@ public class TicTacToe extends Application {
                             this.buildMarkO(rect.getX(), rect.getY(), 50)
                     );
                 }
-                this.checkState();
+                if (!this.checkWinner()) {
+                    this.checkState();
+                }
             }
         };
     }
