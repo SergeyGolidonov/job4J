@@ -18,6 +18,7 @@
         <module>chapter_0002</module>
         <module>chapter_003</module>
         <module>shildtSelfLearning</module>
+        <module>chapter_004</module>
     </modules>
 
     <dependencies>
