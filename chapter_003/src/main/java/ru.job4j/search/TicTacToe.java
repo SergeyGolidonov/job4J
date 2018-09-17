@@ -23,8 +23,10 @@ public class TicTacToe {
 
     public boolean whenNobodyWins() {
         for (int i = 0; i < values.length; i++) {
-            if (!isWinner()) {
-                return true;
+            for (int j = 0; j < values[i].length; j++) {
+                if (!isWinner()) {
+                    return true;
+                }
             }
         }
         return false;

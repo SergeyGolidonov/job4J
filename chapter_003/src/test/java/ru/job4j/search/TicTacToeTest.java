@@ -58,7 +58,7 @@ public class TicTacToeTest {
         assertThat(result, is(true));
     }
 
-    @Test @Ignore
+    @Test // @Ignore
     public void whenNotWinThenFalse() {
         TicTacToe game = new TicTacToe(
                 new int[][] {
