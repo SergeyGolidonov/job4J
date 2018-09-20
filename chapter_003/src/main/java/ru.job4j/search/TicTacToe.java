@@ -8,26 +8,24 @@ public class TicTacToe {
     }
 
     public boolean hasWinner() {
-        return checkWhenNobodyWins() || checkWinner();
+        return checkWinnerHorizont() || checkWinnerVertical();
     }
 
-    public boolean checkWhenNobodyWins() {
+    public boolean checkWinnerHorizont() {
         for (int i = 0; i < values.length; i++) {
-            for (int j = 0; j < values[i].length; j++) {
-                if (values[i][0] != values[0][j]) {
+            for (int j= 0; j < values[i].length; j++) {
+                if (values[i][0] == values[i][j]) {
                     return true;
-                } else if (values[i][0] == values[0][j]) {
-                    return false;
                 }
             }
         }
-        return true;
+        return false;
     }
 
-    public boolean checkWinner() {
+    public boolean checkWinnerVertical() {
         for (int i = 0; i < values.length; i++) {
             for (int j= 0; j < values[i].length; j++) {
-                if (values[i][0] == values[0][j]) {
+                if (values[0][i] == values[i][j]) {
                     return true;
                 }
             }
