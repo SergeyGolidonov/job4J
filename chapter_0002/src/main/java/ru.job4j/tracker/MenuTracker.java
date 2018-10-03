@@ -86,7 +86,7 @@ public class MenuTracker {
             String id = input.ask("Please, enter the task's id: ");
             String name = input.ask("Please, enter the new task's name: ");
             String desc = input.ask("Please, enter the new task's description: ");
-            tracker.replace(id, new Item(name, desc));
+            tracker.replace(new Item(name, desc));
         }
     }
 

@@ -1,6 +1,8 @@
 package ru.job4j.tracker;
 
 import java.util.*;
+import java.util.function.Predicate;
+
 /**
 * @author Sergey Golidonov (3apa3a86@inbox.ru)
 * @version $Id$
@@ -30,12 +32,15 @@ public class Tracker {
 
     /**
      * Метод заменяет ячейку в массиве.
-     * @param id id звявки.
      * @param item новая заявка.
      */
-    public void replace(String id, Item item) {
-        items.set(items.indexOf(this.findById(id)), item);
-        item.setId(id);
+    public void replace(Item item) {
+        for (Item i : items) {
+            if (findById(item.getId()).equals(i) && item.getId() != null) {
+                items.add(items.indexOf(i), item);
+                break;
+            }
+        }
     }
 
     /**
@@ -43,12 +48,10 @@ public class Tracker {
      * @param id id звявки.
      */
     public void delete(String id) {
-        if (id != null) {
-            for (int i = 0; i < items.size(); i++) {
-                if (id.equals(this.items.get(i).getId())) {
-                    this.items.remove(i);
-                    break;
-                }
+        for (Item item : items) {
+            if (findById(id).equals(item)) {
+                items.remove(item);
+                break;
             }
         }
     }
@@ -59,9 +62,10 @@ public class Tracker {
      * @return найденный резултат, либо null если результат не найден.
      */
     public Item findById(String id) {
+        Predicate<String> predicate = p -> p.equals(id);
         Item result = null;
         for (Item item : items) {
-            if (item != null && item.getId().equals(id)) {
+            if (predicate.test(item.getId())) {
                 result = item;
                 break;
             }
@@ -75,9 +79,10 @@ public class Tracker {
      * @return массив.
      */
     public List<Item> findByName(String key) {
+        Predicate<String> predicate = p -> p.equals(key);
         List<Item> result = new ArrayList<>();
         for (Item item : items) {
-            if (item != null && item.getName().equals(key)) {
+            if (predicate.test(item.getName())) {
                 result.add(item);
             }
         }
