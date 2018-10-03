@@ -1,9 +1,13 @@
 package ru.job4j.tracker;
+
+import java.util.List;
+
 /**
 * @author Sergey Golidonov (3apa3a86@inbox.ru)
 * @version $Id$
 * @since 0.1
 */
+
 public class StartUI {
     private final Input input;
 
@@ -22,6 +26,12 @@ public class StartUI {
         this.tracker = tracker;
     }
 
+    private static void accept(List<UserAction> a) {
+        for (UserAction action : a) {
+            System.out.println(action.info());
+        }
+    }
+
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillActions();
@@ -30,7 +40,7 @@ public class StartUI {
             range[i] = i;
         }
         do {
-            menu.show();
+            menu.show(StartUI::accept);
             menu.select(input.ask("Please select action: ", range));
         } while (!"y".equals(this.input.ask("Exit? (y): ")));
     }
