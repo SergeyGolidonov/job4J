@@ -1,107 +1,40 @@
 package ru.job4j.tracker;
-/**
-* @author Sergey Golidonov (3apa3a86@inbox.ru)
-* @version $Id$
-* @since 0.1
-*/
-import org.junit.After;
-import org.junit.Before;
+
 import org.junit.Test;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.StringJoiner;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+/**
+ * @author Sergey Golidonov (3apa3a86@inbox.ru)
+ * @version $Id$
+ * @since 0.1
+ */
+
 public class StartUITest {
-    private final PrintStream stdout = System.out;
-
-    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-    private String menu() {
-        String menu = new StringJoiner(System.lineSeparator())
-                .add("0. Add new item.")
-                .add("1. Show all items.")
-                .add("2. Edit item.")
-                .add("3. Delete item.")
-                .add("4. Find item by Id.")
-                .add("5. Find items by name.")
-                .add("6. Exit Program.")
-                .toString();
-        return menu;
-
-    }
-
-    @Before
-    public void loadOutput() {
-        System.out.println("execute before method");
-        System.setOut(new PrintStream(this.out));
-    }
-
-    @After
-    public void backOutput() {
-        System.setOut(this.stdout);
-        System.out.println("execute after method");
-    }
-    /**
-     * Добавление заявки.
-     */
-    @Test
-    public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
-        Tracker tracker = new Tracker();
-        Input input = new StubInput(new String[]{"0", "test name", "desc", "y"});
-        new StartUI(input, tracker).init();
-        assertThat(tracker.findAll().get(0).getName(), is("test name"));
-    }
-
-    /**
-     * Изменение заявки.
-     */
-    @Test
-    public void whenUpdateThenTrackerHasUpdatedValue() {
-        Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item());
-        Input input = new StubInput(new String[]{"2", item.getId(), "test name", "desc", "y"});
-        new StartUI(input, tracker).init();
-        assertThat(tracker.findById(item.getId()).getName(), is("test name"));
-    }
-
-    /**
-     * Поиск заявки по id.
-     */
-    @Test
-    public void whenFindByIdThenShowItemName() {
-        Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("test1", "testDescription1", 123L));
-        Input input = new StubInput(new String[]{"4", item.getId(), "y"});
-        new StartUI(input, tracker).init();
-        assertThat(tracker.findById(item.getId()).getName(), is("test1"));
-    }
 
     @Test
-    public void whenShowAllThenPrintAlItemsInTracker() {
+    public void whenCreatetingAnItemAnItemIsCreated() {
         Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("name1", "desc1"));
-        Input input = new StubInput(new String[]{"1", "y"});
+        Input input = new StubInput(new String[]{"1", "name", "desc", "д"});
         new StartUI(input, tracker).init();
-        assertThat(new String(this.out.toByteArray()), is(new StringJoiner(System.lineSeparator())
-                        .add(this.menu())
-                        .add(String.format("%s. %s", item.getId(), item.getName()))
-                        .add("")
-                        .toString()));
+        // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
+        assertThat(tracker.getAll().get(0).getName(), is("name"));
     }
-
     @Test
-    public void whenFindByNameThenPrintSelectedItem() {
+    public void whenUpdateThenTrackerHasUpdateValue() {
         Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("name1", "desc1"));
-        Input input = new StubInput(new String[]{"5", item.getName(), "y"});
+        Item item = tracker.add(new Item("name", "desc"));
+        Input input = new StubInput(new String[]{"2", item.getId(), "new_name", "new_desc", "д"});
         new StartUI(input, tracker).init();
-        assertThat(new String(this.out.toByteArray()), is(new StringJoiner(System.lineSeparator())
-                        .add(this.menu())
-                        .add(String.format("%s. %s", item.getId(), item.getName()))
-                        .add("")
-                        .toString()));
+        assertThat(tracker.findById(item.getId()).getName(), is("new_name"));
+    }
+    @Test
+    public void whenDeleteThenTrackerHasDeleteItem() {
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("name", "desc"));
+        Input input = new StubInput(new String[]{"4", item.getId(), "д"});
+        new StartUI(input, tracker).init();
+        assertThat(tracker.getAll().size(), is(0));
     }
 }

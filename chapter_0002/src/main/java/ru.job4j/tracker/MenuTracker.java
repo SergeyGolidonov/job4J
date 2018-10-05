@@ -10,141 +10,148 @@ import java.util.function.Consumer;
 * @since 0.1
 */
 
-public class MenuTracker {
+class ShowItems extends BaseAction {
+    ShowItems(int key, String name) {
+        super(key, name);
+    }
 
+    @Override
+    public void execute(Input input, Tracker tracker) {
+        System.out.println("-----------Проссмотр всех заявок-----------");
+        if (tracker.getAll().size() == 0) {
+            System.out.println("-----------У Вас нет заявок :" + "-----------");
+        } else if (tracker.getAll().size() != 0) {
+            for (Item item : tracker.getAll()) {
+                System.out.println("-----------Заявка с идентификатором:" + item.getId() + "-----------");
+                System.out.println("Имя заявки :" + item.getName());
+                System.out.println("Описание заявки :" + item.getDescription());
+            }
+        }
+    }
+
+}
+
+public class MenuTracker {
     private Input input;
     private Tracker tracker;
+    private  int position = 0;
     private List<UserAction> actions = new ArrayList<>();
 
-    public MenuTracker(Input input, Tracker tracker) {
+    MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
 
-    public void fillActions() {
-        this.actions.add(new AddItem(0,  "Add new item."));
-        this.actions.add(new ShowAll(1, "Show all items."));
-        this.actions.add(new EditItem(2, "Edit item."));
-        this.actions.add(new DeleteItem(3, "Delete item."));
-        this.actions.add(new FindItemById(4, "Find item by Id."));
-        this.actions.add(new FindItemsByName(5, "Find items by name."));
-        this.actions.add(new ExitProgram(6, "Exit Program."));
+    public int fillActions() {
+        int count = 0;
+        this.actions.add(count, new Exit(count++, "Выход."));
+        this.actions.add(count, new Add(count++, "Добавить новую заявку"));
+        this.actions.add(count, new Edit(count++, "Редактировать заявку."));
+        this.actions.add(count, new ShowItems(count++, "Показать все заявки"));
+        this.actions.add(count, new Delete(count++, "Удалить заявку."));
+        this.actions.add(count, new FindBuID(count++, "Найти заявку по идентификатору."));
+        this.actions.add(count, new FindByName(count++, "Найти заявку по имени."));
+        return count;
     }
 
-    public int getRange() {
-        return actions.size();
-    }
-
-    public void select(int key) {
-        this.actions.get(key).execute(this.input, this.tracker);
-    }
 
     public void show(Consumer<List<UserAction>> consumer) {
         consumer.accept(actions);
     }
 
-    /**
-     * Добавление заявки.
-     */
-    private class AddItem extends BaseAction {
-        public AddItem(int key, String name) {
+    public void select(int key) {
+        this.actions.get(key).execute(this.input, this.tracker);
+    }
+    private class Exit extends BaseAction {
+        Exit(int key, String name) {
+            super(key, name);
+        }
+        public void execute(Input input, Tracker tracker) {
+        }
+    }
+    private class Add extends BaseAction {
+
+        Add(int key, String name) {
+            super(key, name);
+        }
+        public void execute(Input input, Tracker tracker) {
+            System.out.println("-----------Добавление новой заявки-----------");
+            String name = input.ask("Введите имя заявки:");
+            String desc = input.ask("Введите описание заявки:");
+            Item item = new Item(name, desc);
+            tracker.add(item);
+            System.out.println("-----------Новая заявка с getID :" + item.getId() + "-----------");
+        }
+
+    }
+    private static class Edit extends BaseAction {
+        Edit(int key, String name) {
             super(key, name);
         }
 
-        @Override
         public void execute(Input input, Tracker tracker) {
-            String name = input.ask("Enter name:");
-            String desc = input.ask("Enter description:");
-            tracker.add(new Item(name, desc));
+            Item previous = new Item();
+            previous.setId(input.ask("Введите идентификатор заявки."));
+            previous.setName(input.ask("Введите имя заявки."));
+            previous.setDescription(input.ask("Введите описание заявки."));
+            tracker.replace(previous);
         }
     }
 
-    /**
-     * Показать все заявки.
-     */
-    private class ShowAll extends BaseAction {
-        public ShowAll(int key, String name) {
+    private class Delete extends BaseAction {
+        Delete(int key, String name) {
             super(key, name);
         }
 
         public void execute(Input input, Tracker tracker) {
-            for (Item item : tracker.findAll()) {
-                System.out.println(String.format("%s. %s", item.getId(), item.getName()));
+            System.out.println("-----------Удаление заявки-----------");
+            String id = input.ask("Введите идентификатор заявки:");
+            for (Item item : tracker.getAll()) {
+                if (item.getId().equals(id) && item.getId() != null) {
+                    tracker.delete(id);
+                    System.out.println("Заявка с идентификатором :" + item.getId() + " удалена.");
+                } else {
+                    System.out.println("Заявка с идентификатором :" + id + " не найдена.");
+                }
+            }
+        }
+
+    }
+    private class FindBuID extends BaseAction {
+        FindBuID(int key, String name) {
+            super(key, name);
+        }
+        public void execute(Input input, Tracker tracker) {
+            System.out.println("-----------Поиск заявки по идентификатору-----------");
+            String id = input.ask("Введите идентификтор заявки.");
+            for (Item item : tracker.getAll()) {
+                if (item.getId().equals(id) && item.getId() != null) {
+                    tracker.findById(id);
+                    System.out.println("Заявка с идентификатором :" + id + " найдена :");
+                    System.out.println("Имя заявки :" + item.getName());
+                    System.out.println("Описание заявки :" + item.getDescription());
+                } else if (!(item.getId() == null && item.getId().equals(id))) {
+                    System.out.println("Заявка с идентификатором :" + id + " не найдена.");
+                }
             }
         }
     }
-
-    /**
-     * Редактирование заявки.
-     */
-    private class EditItem extends BaseAction {
-        public EditItem(int key, String name) {
+    private class FindByName extends BaseAction {
+        FindByName(int key, String name) {
             super(key, name);
         }
-
         public void execute(Input input, Tracker tracker) {
-            String id = input.ask("Please, enter the task's id: ");
-            String name = input.ask("Please, enter the new task's name: ");
-            String desc = input.ask("Please, enter the new task's description: ");
-            tracker.replace(new Item(name, desc));
-        }
-    }
+            System.out.println("-----------Поиск заявки по имени.-----------");
+            String name = input.ask("Введите имя заявки");
+            for (Item item : tracker.getAll()) {
+                tracker.findByName(name);
+                if (item != null && item.getName().equals(name)) {
+                    System.out.println("Заявка с именем :" + item.getName() + " найдена :");
 
-    /**
-     * Удаление заявки.
-     */
-    private class DeleteItem extends BaseAction {
-        public DeleteItem(int key, String name) {
-            super(key, name);
-        }
-
-        public void execute(Input input, Tracker tracker) {
-            String id = input.ask("Please, enter the task's id: ");
-            tracker.delete(id);
-        }
-    }
-
-    /**
-     * Поиск заявки по id.
-     */
-    private class FindItemById extends BaseAction {
-        public FindItemById(int key, String name) {
-            super(key, name);
-        }
-
-        public void execute(Input input, Tracker tracker) {
-            String id = input.ask("Please, enter the task's id: ");
-            Item item = tracker.findById(id);
-            System.out.println(String.format("%s. %s", item.getId(), item.getName()));
-        }
-    }
-
-    /**
-     * Поиск заявки по имени.
-     */
-    private class FindItemsByName extends BaseAction {
-        public FindItemsByName(int key, String name) {
-            super(key, name);
-        }
-
-        public void execute(Input input, Tracker tracker) {
-            String name = input.ask("Please, enter the task's name: ");
-            for (Item item1 : tracker.findByName(name)) {
-                System.out.println(String.format("%s. %s", item1.getId(), item1.getName()));
+                } else {
+                    System.out.println("Заявок с именем :" + name + " не обноружено.");
+                }
             }
-        }
-    }
-
-    /**
-     * Выйти из программы.
-     */
-    private class ExitProgram extends BaseAction {
-        public ExitProgram(int key, String name) {
-            super(key, name);
-        }
-
-        public void execute(Input input, Tracker tracker) {
-
         }
     }
 }

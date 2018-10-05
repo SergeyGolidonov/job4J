@@ -9,46 +9,30 @@ import java.util.List;
 */
 
 public class StartUI {
+    private int[] ranges = new int[]{0, 1, 2, 3, 4, 5, 6};
     private final Input input;
-
-    /**
-     * Хранилище заявок.
-     */
     private final Tracker tracker;
 
-    /**
-     * Конструтор инициализирующий поля.
-     * @param input ввод данных.
-     * @param tracker хранилище заявок.
-     */
     public StartUI(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
 
     private static void accept(List<UserAction> a) {
-        for (UserAction action : a) {
-            System.out.println(action.info());
-        }
+        a.forEach(userAction -> System.out.println(userAction.info()));
     }
 
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillActions();
-        int[] range = new int[menu.getRange()];
-        for (int i = 0; i < range.length; i++) {
-            range[i] = i;
-        }
         do {
+
             menu.show(StartUI::accept);
-            menu.select(input.ask("Please select action: ", range));
-        } while (!"y".equals(this.input.ask("Exit? (y): ")));
+
+            menu.select(input.ask("Выберете пунет меню :", ranges));
+        } while (!"д".equals(this.input.ask("Выйти? д/н: ")));
     }
 
-    /**
-     * Запускт программы.
-     * @param args
-     */
     public static void main(String[] args) {
         new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
     }
