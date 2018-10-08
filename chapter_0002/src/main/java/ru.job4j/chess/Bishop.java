@@ -1,6 +1,9 @@
 package ru.job4j.chess;
 
-import java.util.Arrays;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
@@ -9,43 +12,56 @@ import java.util.Arrays;
  */
 
 public class Bishop extends Figure {
-
-    public Bishop(Cell position) {
-        super(position);
+    /**
+     * Конструктр класса Bishop, вызывается из класса Figure
+     * @param dest ячейка с новыми координатами
+     */
+    Bishop(Cell dest) {
+        super(dest);
     }
 
     @Override
     public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
-        Cell[] tmp = new Cell[SIZE - 1];
-        int pos = 0;
-        int x = source.getX();
-        int y = source.getY();
-        int testX = 0;
-        int testY = 0;
-        if (source.getY() < dest.getY()) {
-            testY = 1;
-        } else {
-            testY = -1;
+        BiPredicate<Cell, Cell> predicate = this::diagonal;
+        BiFunction<Cell, Cell, Cell[]> biFunction = this::difference;
+        // координаты по x и по y должны быть равны по модулю, так как слол ходит только по диагонали
+        if (predicate.test(source, dest)) {
+            throw new ImpossibleMoveException("Movement can not be made");
         }
-        if (source.getX() < dest.getX()) {
-            testX = 1;
-        } else {
-            testX = -1;
-        }
-        do {
-            x += testX;
-            y += testY;
-            if (x < 1 || x > SIZE || y < 1 || y > SIZE) {
-                throw new ImpossibleMoveException("Слон не может так ходить.");
-            }
-            tmp[pos++] = new Cell(x, y);
-        }
-        while (x != dest.getX() || y != dest.getY());
-        return Arrays.copyOf(tmp, pos);
-    }
 
+        return biFunction.apply(source, dest);
+    }
     @Override
     public Figure copy(Cell dest) {
         return new Bishop(dest);
     }
+
+    private boolean diagonal(Cell source, Cell dest) {
+        Predicate<Cell> predicate = abs -> Math.abs(dest.getX() - source.getX()) != Math.abs(dest.getY() - source.getY());
+        return predicate.test(dest);
+    }
+
+    private Cell[] difference(Cell source, Cell dest) {
+        Function<Cell, Cell[]> function = cell -> {
+            // счетчик индекса пути фигуры
+            int count = 1;
+            int size = source.getX() + 1;
+            // путь фигуры
+            Cell[] currentCourse = new Cell[size];
+            // Проверяем, что разница между начальной и конечной координатой меньше либо равна -1, так как
+            // слон ходит только по диагонали
+            if ((source.getX() - dest.getX()) <= -1 && (source.getY() - dest.getY()) <= -1) {
+                // проходим в цикле логику пути фигуры, где начальным точккам X и Y на первой итерации прибавляем  один шаг
+                // затем инкрементируем
+                for (int i = source.getX() + 1, j = source.getY() + 1; count <= Math.abs(dest.getX() - source.getX()); i++, j++) {
+                    // Заполняем массив  ячеек координатами пройденных ячеек
+                    currentCourse[count - 1] = new Cell(i, j);
+                    count++;
+                }
+            }
+            return currentCourse;
+        };
+        return function.apply(dest);
+    }
+
 }

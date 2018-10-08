@@ -1,5 +1,7 @@
 package ru.job4j.chess;
 
+import java.util.function.Predicate;
+
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
  * @version $Id$
@@ -7,43 +9,39 @@ package ru.job4j.chess;
  */
 
 public class Board {
-
-    private static final int FINIFH = 32;
-
-    Figure[] figures = new Figure[FINIFH];
-
-    private int pos = 0;
-
-    public void add(Figure figure) {
-        this.figures[pos++] = figure;
-    }
+    /**
+     * Массив фигур доски
+     */
+    Figure[] figures = new Figure[32];
+    /**
+     * Счетчик добавления фигуры
+     */
+    private int count = 0;
 
     boolean move(Cell source, Cell dest) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
-        int index = this.getIndexOfFigureFromCell(source);
-        if (index < 0) {
-            throw new FigureNotFoundException("Фигуры нет на месте");
-        }
-        Cell[] cells = this.figures[index].way(source, dest);
-        for (Cell cell : cells) {
-            int obstacle = this.getIndexOfFigureFromCell(cell);
-            if (obstacle >= 0) {
-                throw new OccupiedWayException("Фигура не может пройти");
+        for (int index = 0; index < figures.length; index++) {
+            Predicate<Cell> predicate = p -> p.equals(figures[index].position);
+            if (source != null && predicate.test(source)) {
+                Cell[] route = figures[index].way(source, dest);
+                for (Cell busy: route) {
+                    if (busy != null && predicate.test(busy)) {
+                        throw  new OccupiedWayException("the route is busy");
+                    }
+                }
+            } else {
+                throw new FigureNotFoundException("404 Figure not found");
             }
+            figures[index] = figures[index].copy(dest);
+            return true;
         }
-
-        figures[index].copy(dest);
-        return true;
+        return false;
     }
 
-    private int getIndexOfFigureFromCell(Cell cell) {
-        int index = -1;
-        for (int i = 0; i < this.pos; i++) {
-            if (figures[i] != null && figures[i].position.getX() == cell.getX()
-                    && figures[i].position.getY() == cell.getY()) {
-                index = i;
-                break;
-            }
-        }
-        return index;
+    /**
+     * Метод добавления новой фигуры.
+     * @param figure новая вигура
+     */
+    public void  add(Figure figure) {
+        figures[count++] = figure;
     }
 }
