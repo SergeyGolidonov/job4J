@@ -16,68 +16,130 @@ import static org.junit.Assert.*;
 */
 
 public class TrackerTest {
+
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
-            Tracker tracker = new Tracker();
-            Item item = new Item("test1", "testDescription", 123L);
-            tracker.add(item);
-            List<Item> expect = new ArrayList<>();
-            expect.add(item);
-            assertThat(tracker.getAll(), is(expect));
+        Tracker tracker = new Tracker();
+        Item item = new Item("test1", "testDescription", 123L);
+        Item result = tracker.add(item);
+        assertThat(tracker.findAll().get(0), is(result));
     }
+
+    @Test
+    public void whenFindAllThenGetItemsArray() {
+
+    }
+
+    @Test
+    public void whenIdIsNotInItemsThenNull() {
+        Tracker tracker = new Tracker();
+        Item item1 = new Item("test1", "testDescription1", 123L);
+        tracker.add(item1);
+        Item result = tracker.findById("");
+        Item expected = null;
+        assertThat(expected, is(result));
+    }
+
+    @Test
+    public void whenIdIsNullThenNull() {
+        Tracker tracker = new Tracker();
+        Item result = tracker.findById(null);
+        Item expected = null;
+        assertThat(expected, is(result));
+    }
+
+    @Test
+    public void whenIdIsFoundThenItemFound() {
+        Tracker tracker = new Tracker();
+        Item item1 = new Item("test1", "testDescription1", 123L);
+        tracker.add(item1);
+        Item item2 = new Item("test2", "testDescription2", 123L);
+        tracker.add(item2);
+        Item item3 = new Item("test3", "testDescription3", 123L);
+        Item expected = tracker.add(item3);
+
+        Item result = tracker.findById(expected.getId());
+        assertThat(expected, is(result));
+    }
+
+    @Test
+    public void whenDeletedFirstItem() {
+        Tracker tracker = new Tracker();
+        ArrayList<Item> expected = tracker.findAll();
+        Item item1 = new Item("test1", "testDescription1", 123L);
+        tracker.add(item1);
+        tracker.delete(item1.getId());
+        ArrayList<Item> result = tracker.findAll();
+        assertThat(expected, is(result));
+    }
+
+    @Test
+    public void whenDeletedSecondItem() {
+        Tracker tracker = new Tracker();
+        Item item1 = new Item("test1", "testDescription1", 123L);
+        Item item2 = new Item("test2", "testDescription2", 124L);
+        Item item3 = new Item("test3", "testDescription3", 124L);
+        tracker.add(item1);
+        tracker.add(item3);
+        ArrayList<Item> expected = tracker.findAll();
+        tracker.delete(item3.getId());
+        tracker.add(item2);
+        tracker.add(item3);
+        tracker.delete(item2.getId());
+        ArrayList<Item> result = tracker.findAll();
+        assertThat(expected, is(result));
+    }
+
     @Test
     public void whenReplaceNameThenReturnNewName() {
-            Tracker tracker = new Tracker();
-            Item previous = new Item("test1", "testDescription", 123L);
-            tracker.add(previous);
-            Item next = new Item("test2", "testDescription2", 1234L);
-            next.setId(previous.getId());
-            next.setId(previous.getId());
-            tracker.replace(next);
-            assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
+        Tracker tracker = new Tracker();
+        Item previous = new Item("test1", "testDescription", 123L);
+        tracker.add(previous);
+        Item next = new Item("test2", "testDescription2", 1234L);
+        next.setId(previous.getId());
+        tracker.replace(previous.getId(), next);
+        assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
     }
+
     @Test
-    public  void whenFindidThenReturnId() {
-            Tracker tracker = new Tracker();
-            Item item = new Item("test1", "testdesc", 123L);
-            tracker.add(item);
-            assertThat((tracker.findById(item.getId()).getName()), is("test1"));
+    public void whenFoundByName() {
+        Tracker tracker = new Tracker();
+        Item item1 = new Item("test1", "testDescription1", 123L);
+        tracker.add(item1);
+        ArrayList<Item> expected = tracker.findAll();
+        Item item2 = new Item("test2", "testDescription2", 124L);
+        tracker.add(item2);
+        Item item3 = new Item("test3", "testDescription3", 124L);
+        tracker.add(item3);
+        ArrayList<Item> result = tracker.findByName("test1");
+        assertThat(expected, is(result));
     }
+
     @Test
-    public void whenDeleteItemThenReturnNewArrayWithoutItem() {
-            Tracker tracker = new Tracker();
-            Item item = new Item("test1", "desc1", 123L);
-            tracker.add(item);
-            Item next = new Item("test2", "testDescription2", 1234L);
-            tracker.add(next);
-            Item next2 = new Item("test22", "testDescription22", 12342L);
-            tracker.add(next2);
-            tracker.delete(next.getId());
-            List<Item> expectList = Arrays.asList(item, next2);
-            assertThat(tracker.getAll(), is(expectList));
+    public void whenNotFoundByName() {
+        ArrayList<Item> expected = new ArrayList<>();
+        Tracker tracker = new Tracker();
+        Item item1 = new Item("test1", "testDescription1", 123L);
+        tracker.add(item1);
+        Item item2 = new Item("test2", "testDescription2", 124L);
+        tracker.add(item2);
+        Item item3 = new Item("test3", "testDescription3", 124L);
+        tracker.add(item3);
+        ArrayList<Item> result = tracker.findByName("абракадабра");
+        assertThat(expected, is(result));
     }
+
     @Test
-    public void whenFindByNameWhenReturnByName() {
-            Tracker tracker = new Tracker();
-            Item item = new Item("test1", "desc1", 123L);
-            tracker.add(item);
-            Item next = new Item("test1", "desc41", 1243L);
-            tracker.add(next);
-            Item previuos = new Item("test12", "desc1", 123L);
-            tracker.add(previuos);
-            List<Item> expectList = Arrays.asList(item, next);
-            assertThat(tracker.findByName(item.getName()), is(expectList));
-    }
-    @Test
-    public  void whenFindAllWhenReturnAllItemsWithoutNull() {
-            Tracker tracker = new Tracker();
-            Item item = new Item("test1", "desc1", 123L);
-            tracker.add(item);
-            Item next = new Item("test1", "desc1", 123L);
-            tracker.add(next);
-            Item third = new Item("test1", "desc1", 123L);
-            tracker.add(third);
-            List<Item> expectList = Arrays.asList(item, next, third);
-            assertThat(tracker.getAll().toString(), is(expectList.toString()));
+    public void whenKeyIsNullThenNotFoundByName() {
+        ArrayList<Item> expected = new ArrayList<>();
+        Tracker tracker = new Tracker();
+        Item item1 = new Item("test1", "testDescription1", 123L);
+        tracker.add(item1);
+        Item item2 = new Item("test2", "testDescription2", 124L);
+        tracker.add(item2);
+        Item item3 = new Item("test3", "testDescription3", 124L);
+        tracker.add(item3);
+        ArrayList<Item> result = tracker.findByName(null);
+        assertThat(expected, is(result));
     }
 }
