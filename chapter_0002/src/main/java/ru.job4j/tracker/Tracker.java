@@ -1,9 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.function.Predicate;
 
 /**
  * @author Sergey Golidonov (3apa3a86@inbox.ru)
