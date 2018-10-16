@@ -65,11 +65,11 @@ public class TrackerTest {
     @Test
     public void whenDeletedFirstItem() {
         Tracker tracker = new Tracker();
-        ArrayList<Item> expected = tracker.findAll();
+        List<Item> expected = tracker.findAll();
         Item item1 = new Item("test1", "testDescription1", 123L);
         tracker.add(item1);
         tracker.delete(item1.getId());
-        ArrayList<Item> result = tracker.findAll();
+        List<Item> result = tracker.findAll();
         assertThat(expected, is(result));
     }
 
@@ -81,12 +81,12 @@ public class TrackerTest {
         Item item3 = new Item("test3", "testDescription3", 124L);
         tracker.add(item1);
         tracker.add(item3);
-        ArrayList<Item> expected = tracker.findAll();
+        List<Item> expected = tracker.findAll();
         tracker.delete(item3.getId());
         tracker.add(item2);
         tracker.add(item3);
         tracker.delete(item2.getId());
-        ArrayList<Item> result = tracker.findAll();
+        List<Item> result = tracker.findAll();
         assertThat(expected, is(result));
     }
 
@@ -106,12 +106,12 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item item1 = new Item("test1", "testDescription1", 123L);
         tracker.add(item1);
-        ArrayList<Item> expected = tracker.findAll();
+        List<Item> expected = tracker.findAll();
         Item item2 = new Item("test2", "testDescription2", 124L);
         tracker.add(item2);
         Item item3 = new Item("test3", "testDescription3", 124L);
         tracker.add(item3);
-        ArrayList<Item> result = tracker.findByName("test1");
+        List<Item> result = tracker.findByName("test1");
         assertThat(expected, is(result));
     }
 
@@ -125,7 +125,7 @@ public class TrackerTest {
         tracker.add(item2);
         Item item3 = new Item("test3", "testDescription3", 124L);
         tracker.add(item3);
-        ArrayList<Item> result = tracker.findByName("абракадабра");
+        List<Item> result = tracker.findByName("абракадабра");
         assertThat(expected, is(result));
     }
 
@@ -139,7 +139,7 @@ public class TrackerTest {
         tracker.add(item2);
         Item item3 = new Item("test3", "testDescription3", 124L);
         tracker.add(item3);
-        ArrayList<Item> result = tracker.findByName(null);
+        List<Item> result = tracker.findByName(null);
         assertThat(expected, is(result));
     }
 }

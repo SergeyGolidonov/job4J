@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -55,8 +56,8 @@ public class StartUITest {
         Item item = tracker.add(new Item("proba", "desc1", 123L));
         Input input = new StubInput(new String[]{"3", item.getId(), "6"});
         new StartUI(input, tracker).init();
-        ArrayList<Item> expected = new ArrayList<>();
-        ArrayList<Item> result = tracker.findAll();
+        List<Item> expected = new ArrayList<>();
+        List<Item> result = tracker.findAll();
         assertThat(expected, is(result));
     }
 
@@ -67,7 +68,7 @@ public class StartUITest {
         Item item2 = tracker.add(new Item("test2", "desc2", 123L));
         Input input = new StubInput(new String[]{"3", item1.getId(), "6"});
         new StartUI(input, tracker).init();
-        ArrayList<Item> result = tracker.findAll();
+        List<Item> result = tracker.findAll();
         assertThat(result.get(0).getName(), is("test2"));
     }
 
