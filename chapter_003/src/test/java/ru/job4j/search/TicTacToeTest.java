@@ -6,7 +6,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class TicTacToeTest {
-    @Test
+    @Test //@Ignore
     public void wheWinInDiagonalThenWinner() {
         TicTacToe game = new TicTacToe(
                 new int[][] {
@@ -32,7 +32,7 @@ public class TicTacToeTest {
         assertThat(result, is(true));
     }
 
-    @Test
+    @Test //@Ignore
     public void whenWinInVertThenWinner() {
         TicTacToe game = new TicTacToe(
                 new int[][] {
@@ -58,7 +58,7 @@ public class TicTacToeTest {
         assertThat(result, is(true));
     }
 
-    @Test // @Ignore
+    @Test //@Ignore
     public void whenNotWinThenFalse() {
         TicTacToe game = new TicTacToe(
                 new int[][] {

@@ -17,16 +17,13 @@ public class TicTacToe {
     public boolean hasWinner() {
         return checkWinnerHorizont()
                 || checkWinnerVertical()
-                || checkWinnerDiagonal()
-                || checkWhenNobodyWins();
+                || checkWinnerDiagonal();
     }
 
     public boolean checkWinnerHorizont() {
         for (int i = 0; i < values.length; i++) {
-            for (int j= 1; j < values.length; j++) {
-                if (values[i][0] == values[i][j]) {
-                    return true;
-                }
+            if (values[i][0] == values[i][1] && values[i][1] == values[i][2]) {
+                return true;
             }
         }
         return false;
@@ -34,11 +31,9 @@ public class TicTacToe {
 
     public boolean checkWinnerVertical() {
         for (int i = 0; i < values.length; i++) {
-            for (int j= 1; j < values.length; j++) {
-                if (values[0][i] == values[i][j]) {
+                if (values[0][i] == values[1][i] && values[1][i] == values[2][i]) {
                     return true;
                 }
-            }
         }
         return false;
     }
@@ -62,12 +57,12 @@ public class TicTacToe {
         return result;
     }
 
-    public boolean checkWhenNobodyWins() {
-        for (int i = 0; i < values.length; i++) {
-            if (!checkWinnerHorizont() && !checkWinnerVertical() && !checkWinnerDiagonal()) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean checkWhenNobodyWins() {
+//        for (int i = 0; i < values.length; i++) {
+//            if (hasWinner()) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }
